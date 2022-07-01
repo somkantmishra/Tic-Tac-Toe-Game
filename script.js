@@ -1,29 +1,28 @@
-console.log('script started...');
-
-var turn = "X";
 
 var b = ["1", "", "", "", "2", "", "", "", "3"];
 
+var turn = "X";
 var winner = "nil";
-
 var count = 0;
 
 function resetgame()
 {
-    for(let i = 0; i<9; i++)
+    for(let i = 0; i < 9; i++)
     {
-        b[i]=i;
+        b[i] = i;
     }
-    for(let i = 0; i<9; i++)
+    for(let i = 0; i < 9; i++)
     {
-        document.querySelectorAll(".cell")[i].firstElementChild.style.width = "0";
-        document.querySelectorAll(".cell")[i].lastElementChild.style.width = "0";
+        document.querySelectorAll(".cell")[i].querySelector(".X").style.width = "0";
+        document.querySelectorAll(".cell")[i].querySelector(".O").style.width = "0";
     }
     turn = "X";
     winner = "nil";
     count = 0;
-    document.querySelector(".turn").innerText = "X's Turn";
+    document.querySelector(".turn").innerText = turn + " - Turn";
 }
+
+resetgame();
 
 document.querySelector(".btn").addEventListener("click", function()
 {
@@ -44,36 +43,41 @@ function check(cur)
        b[2] == b[4] && b[4] == b[6])
     {
         winner = cur;
-        document.querySelector(".turn").innerText = cur + " Won, Reset to Play New Game.";
+        var oldbg = document.querySelector("body").style.backgroundColor;
+        document.querySelector("body").style.backgroundColor = "white";
+        setTimeout(function()
+        {
+            document.querySelector("body").style.backgroundColor = oldbg;
+        }, 100);
+        
+        document.querySelector(".turn").innerText = cur + " - Winner!!!";
     }
     if(count == 9 && winner == "nil")
-        document.querySelector(".turn").innerText = "Draw, Reset to Play New Game.";
+    {
+        document.querySelector(".turn").innerText = "Draw!!!";
+    }
 }
 
-for(let i = 0; i<9; i++)
+for(let i = 0; i < 9; i++)
 {
     document.querySelectorAll(".cell")[i].addEventListener("click",
     function()
     {
-        if(b[i] == "X" || b[i] == "O" || winner != "nil") return;
+        if(winner != "nil" || count == 9)
+        {
+            resetgame();
+            return;
+        }
+        if(b[i] == "X" || b[i] == "O" || winner != "nil")
+        {
+            return;
+        }
         var cur = turn;
-        if(turn == "X")
-        {
-            this.firstElementChild.style.width = "18vmin";
-            turn = "O";
-            document.querySelector(".turn").innerText = "O's Turn";
-            b[i] = "X";
-        }
-        else
-        {
-            this.lastElementChild.style.width = "18vmin";
-            turn = "X";
-            document.querySelector(".turn").innerText = "X's Turn";
-            b[i] = "O";
-        }
-
+        this.querySelector("." + turn).style.width = "16vmin";
+        turn = ( turn == "X" ? "O" : "X");
+        document.querySelector(".turn").innerText = turn + " - Turn";
+        b[i] = turn;
         count++;
         check(cur);
-
     });
 }

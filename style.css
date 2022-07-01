@@ -1,6 +1,8 @@
 body
 {
+    background-color: rgb(235, 210, 172);
     margin: 0;
+    padding: 0;
 }
 
 .game
@@ -16,26 +18,43 @@ body
 
 .cell
 {
-    border: 4px solid rgba(0, 0, 0, 0.522);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1.5vmin solid rgb(150, 118, 70);
 }
 
-.x
+.X
 {
     width: 0;
+    transition: width 100ms ease-in-out;
 }
 
-.o
+.O
 {
     width: 0;
+    transition: width 100ms ease-in-out;
 }
 
-.c1, .c2, .c3 { border-top: 0; }
+.c1, .c2, .c3
+{
+    border-top: 0;
+}
 
-.c1, .c4, .c7 { border-left: 0; }
+.c1, .c4, .c7
+{
+    border-left: 0;
+}
 
-.c7, .c8, .c9 { border-bottom: 0; }
+.c7, .c8, .c9
+{
+    border-bottom: 0;
+}
 
-.c3, .c6, .c9 { border-right: 0; }
+.c3, .c6, .c9
+{
+    border-right: 0;
+}
 
 .turn
 {
@@ -56,7 +75,10 @@ body
 
 .btn
 {
+    background-color: rgb(241, 182, 93);
+    padding: 2vmin 3vmin;
+    border-color: bisque;
+    border-radius: 3vmin;
     font-size: 4vmin;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-
